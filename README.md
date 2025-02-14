@@ -1,5 +1,7 @@
 # Create secure python environment
 
+Creates a secure python environment using Docker for running untrusted Python scripts (hopefully).
+
 ## Build or rebuild the secure-python Docker image
 
     cd secure-python
