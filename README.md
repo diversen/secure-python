@@ -86,3 +86,7 @@ Timeout:
 
     timeout 2s docker run --init --rm -v "$(pwd)/test_timeout.py:/sandbox/test_timeout.py" secure-python /sandbox/test_timeout.py
 
+Malware:
+
+    docker run --rm --memory=256m --cpus="0.5" --network none -v "$(pwd)/test_malware.py:/sandbox/test_malware.py" secure-python /sandbox/test_malware.py
+
