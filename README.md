@@ -7,7 +7,7 @@
 
 ## Usage example
 
-    timeout 10s docker run --network none --rm --memory=256m --cpus="0.5" --ulimit nproc=2000:2000 --ulimit stack=67108864 -v "$(pwd)/script.py:/sandbox/script.py" secure-python
+    timeout 10s docker run --network none --init --rm --memory=256m --memory-swap=256m --cpus="0.5" --ulimit nproc=2000:2000 --ulimit stack=67108864 -v "$(pwd)/script.py:/sandbox/script.py" secure-python script.py
 
 ## Command description
 
@@ -24,38 +24,35 @@ Creates and runs a new Docker container from the specified image (secure-python)
     --network none
 
 Disables all network access inside the container.
-Prevents the script from making external API calls, downloading files, or communicating with other containers.
-Enhances security and isolation.
+
+    --init
+
+Enables the use of an init process inside the container. This process helps manage child processes and ensures proper signal handling.
 
     --rm
 
 Automatically removes the container after execution.
 Ensures that no files, logs, or changes persist for future runs.
-Prevents disk clutter by eliminating unnecessary containers.
-(If omitted, the container remains and can be restarted, potentially causing persistent file issues.)
 
     --memory=256m
 
 Restricts RAM usage inside the container to 256MB.
-Prevents memory-hungry scripts from consuming too many system resources.
-If memory usage exceeds this limit, the process is terminated.
+
+    --memory-swap=256m
+
+Sets the total memory limit (RAM + swap) to 256MB.
 
     --cpus="0.5"
 
 Limits the container to use half of a single CPU core.
-Helps ensure fair resource distribution and prevents CPU-intensive scripts from slowing down the system.
 
     --ulimit nproc=2000:2000
 
 Restricts the number of processes inside the container to 2000.
-Prevents fork bombs or excessive process creation that could crash the system.
-Ensures better process management.
 
     --ulimit stack=67108864
 
 Limits the stack size to 64MB.
-Prevents excessive memory allocation for deep recursive calls.
-Helps control stack overflows and runaway memory usage.
 
     -v "$(pwd)/script.py:/sandbox/script.py"
 
@@ -66,3 +63,26 @@ Ensures that code changes on the host reflect inside the container without rebui
     secure-python
 
 Specifies the secure-python Docker image used to run the container.
+
+## Tests
+
+Network:
+
+    docker run --network none --rm -v "$(pwd)/test_network.py:/sandbox/test_network.py" secure-python /sandbox/test_network.py
+
+Memory:
+
+    docker run --memory=256m --memory-swap=256m --rm -v "$(pwd)/test_memory.py:/sandbox/test_memory.py" secure-python /sandbox/test_memory.py
+
+CPU limit:
+
+    docker run --cpus="0.5" --rm -v "$(pwd)/test_cpu.py:/sandbox/test_cpu.py" secure-python /sandbox/test_cpu.py
+
+In order to check run:
+
+    docker stats
+
+Timeout:
+
+    timeout 2s docker run --init --rm -v "$(pwd)/test_timeout.py:/sandbox/test_timeout.py" secure-python /sandbox/test_timeout.py
+
