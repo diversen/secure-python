@@ -1,10 +1,15 @@
 # Create secure python environment
 
-Creates a secure python environment using Docker for running untrusted Python scripts (hopefully).
+Some instruction on how to create a secure python environment using Docker.
+
+This can be used for running untrusted Python scripts (hopefully).
+
+If it is insecure in any way please let me know. 
 
 ## Build or rebuild the secure-python Docker image
 
-    cd secure-python
+    git clone https://github.com/diversen/docker-secure-python.git
+    cd docker-secure-python
     docker build -t secure-python .
 
 ## Usage example
