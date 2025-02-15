@@ -8,8 +8,8 @@ If it is insecure in any way please let me know.
 
 ## Build or rebuild the secure-python Docker image
 
-    git clone https://github.com/diversen/docker-secure-python.git
-    cd docker-secure-python
+    git clone https://github.com/diversen/secure-python.git
+    cd secure-python
     docker build -t secure-python .
 
 ## Usage example
