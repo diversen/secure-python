@@ -11,7 +11,7 @@ USER restricted_user
 WORKDIR /sandbox
 
 # Install only essential Python libraries
-RUN pip install --no-cache-dir numpy pandas matplotlib requests
+RUN pip install --no-cache-dir numpy pandas matplotlib requests matplotlib
 
 # Entry point: Python will execute the script passed as an argument
 ENTRYPOINT ["python"]
